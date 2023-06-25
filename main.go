@@ -196,6 +196,9 @@ func main() {
 				kill(os.Getpid(), syscall.SIGUSR1)
 				wg.Wait()
 				defer ctx.Release()
+
+				// Signal parent process since we are taking over
+				_ = kill(os.Getppid(), syscall.SIGUSR1)
 			}
 
 		} else {
